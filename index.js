@@ -25,7 +25,9 @@ app.get('/', function(req, res){
 })
 
 app.post('/users/signup', function(req, res){
-  var sql = `INSERT INTO users (user_id, password, name, nickname, email, register_date) values ('${req.body.user_id}', '${req.body.password}', '${req.body.name}', '${req.body.nickname}', '${req.body.email}', '2023-01-01')`
+  const currentDate = new Date().toISOString().slice(0, 19).replace('T', ' ');
+  console.log(currentDate)
+  var sql = `INSERT INTO users (user_id, password, name, nickname, email, register_date) values ('${req.body.user_id}', '${req.body.password}', '${req.body.name}', '${req.body.nickname}', '${req.body.email}', '${currentDate}')`
   console.log(req.body)
   connection.query(sql, function(err, rows, fields){
     if(err) throw err
@@ -33,8 +35,6 @@ app.post('/users/signup', function(req, res){
     res.send('완료')
   })
 })
-
-
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
